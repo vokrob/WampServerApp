@@ -9,9 +9,9 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 composeBom = "2024.12.01"
 
+kaptVersion = "2.1.10-RC"
 hiltVersion = "2.53"
 hiltVersionNavigation = "1.2.0"
-kaptVersion = "2.1.10-RC"
 
 retrofitVersion = "2.11.0"
 
@@ -43,8 +43,9 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
-hiltCompiler = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kaptVersion" }
+hiltCompiler = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
+
 
 
 

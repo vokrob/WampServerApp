@@ -21,6 +21,10 @@ class MainViewModel @Inject constructor(private val mainApi: MainApi) : ViewMode
         mainApi.saveUser(user)
         userList.value = mainApi.getAllUsers()
     }
+
+    fun uploadImage(imageData: ImageData) = viewModelScope.launch {
+        val imageResponse = mainApi.uploadImage(imageData)
+    }
 }
 
 

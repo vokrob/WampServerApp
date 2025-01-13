@@ -1,7 +1,11 @@
 package com.vokrob.wampserverapp
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,12 +29,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.vokrob.wampserverapp.ui.theme.WampServerAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -64,6 +70,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
+    val context = LocalContext.current
+
     val name = remember { mutableStateOf("") }
     val age = remember { mutableStateOf("") }
 
@@ -119,12 +127,10 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp),
                 onClick = {
-                    viewModel.saveUser(
-                        User(
-                            name.value,
-                            0,
-                            System.currentTimeMillis().toString(),
-                            age.value
+                    viewModel.uploadImage(
+                        ImageData(
+                            bitmapToBase64(context),
+                            "test.jpg"
                         )
                     )
                 }
@@ -134,6 +140,22 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
         }
     }
 }
+
+private fun bitmapToBase64(context: Context): String {
+    val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.raccoon_hacker)
+    val byteOutputStream = ByteArrayOutputStream()
+
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteOutputStream)
+
+    val byteArray = byteOutputStream.toByteArray()
+
+    return Base64.encodeToString(byteArray, Base64.DEFAULT)
+}
+
+
+
+
+
 
 
 
